@@ -8,6 +8,7 @@
   <link rel="stylesheet" type="text/css" href="style/main.css" />
 </head>
 <body>
+  <div style="margin:10px">
   <h1>Select your settings for the database</h1>
   <div>
     <label>Select Doculects:   <select class="selex" id="doculects" multiple>
@@ -327,7 +328,7 @@
   </div>
   <button onclick="makeURL();">SUBMIT</button>
   
-  <div id="output"></div>
+  <div id="output"></div></div>
   <script>$('#concepts').multiselect({
       disableIfEmtpy: true,
       includeSelectAllOption : true,
@@ -366,9 +367,11 @@ function makeURL() {
     if (doc.selected) {doculects.push(doc.value);
     }
   }
-  if (doculects.length != docs.options.length) {
+
+  if (doculects.length != docs.options.length && doculects.length > 0) {
     url += '&doculects='+doculects.join(',');
   }
+
 
   /* get selected doculects */
   var docs = document.getElementById('concepts');
@@ -377,7 +380,7 @@ function makeURL() {
     if (doc.selected) {concepts.push(doc.value);
     }
   }
-  if (concepts.length != docs.options.length) {
+  if (concepts.length != docs.options.length && concepts.length > 0) {
     url += '&concepts='+concepts.join(',');
   }
 
@@ -388,14 +391,15 @@ function makeURL() {
     if (doc.selected) {columns.push(doc.value);
     }
   }
-  if (columns.length != docs.options.length) {
+  if (columns.length != docs.options.length && columns.length > 0) {
     url += '&columns='+columns.join(',');
   }
 
   /* output the url */
   var output = document.getElementById('output');
-  output.innerHTML = 'Press <a href="'+url+'" target="_blank">here</a> to open the database '
-    + 'with your specified settings.';
+  output.innerHTML = '<br><br><p style="margin-top:30px;width:60%;font-size:16px">Press <a style="color:red;font-weight:bold;" href="'+url+'" target="_blank">here</a> to open the database '
+    + 'with your specified settings, or paste the link below in your browser.</p>';
+  output.innerHTML += '<pre style="width:60%"><code>'+url+'</code></pre>';
 
 }
 </script>
